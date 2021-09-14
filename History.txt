@@ -1,0 +1,16 @@
+SonSonDS revision history
+-=-=-=-=-=-=-=-=-=-=-=-=-
+
+
+V0.1.0 - 2021-03-23 (FluBBa)
+	Added load/save state.
+
+V0.0.2 - 2021-02-17 (FluBBa)
+	Everything seems to work.
+
+V0.0.1 - 2021-02-15 (FluBBa)
+	Game starts.
+
+V0.0.0 - 2021-02-14 (FluBBa)
+	Started to code.
+

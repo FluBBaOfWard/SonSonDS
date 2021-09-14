@@ -1,0 +1,6 @@
+build
+include/sonson
+*.elf
+*.nds
+*.zip
+SonSonDS.xcodeproj/project.xcworkspace/xcuserdata

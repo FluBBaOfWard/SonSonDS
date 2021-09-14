@@ -1,0 +1,18 @@
+SonSonDS To do
+--------------
+
+
+Misc:
+	Change icon.
+
+Graphic:
+	Add support for screen-flip.
+	Set top 4 rows fixed in unscaled mode.
+
+CPU:
+
+GUI:
+
+Sound:
+
+Games:
