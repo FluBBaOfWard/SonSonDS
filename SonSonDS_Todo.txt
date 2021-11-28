@@ -3,7 +3,6 @@ SonSonDS To do
 
 
 Misc:
-	Change icon.
 
 Graphic:
 	Add support for screen-flip.

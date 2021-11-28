@@ -32,8 +32,7 @@ soundInit:
 ;@----------------------------------------------------------------------------
 	stmfd sp!,{lr}
 
-	ldr ayptr,=ay38910_0
-	mov r1,#1
+	ldr r0,=ay38910_0
 
 	ldmfd sp!,{lr}
 //	bx lr
@@ -44,9 +43,9 @@ soundReset:
 	stmfd sp!,{lr}
 	mov r0,#COUNTER
 	str r0,timer240Hz
-	ldr ayptr,=ay38910_0
+	ldr r0,=ay38910_0
 	bl ay38910Reset				;@ Sound
-	ldr ayptr,=ay38910_1
+	ldr r0,=ay38910_1
 	bl ay38910Reset				;@ Sound
 	ldmfd sp!,{lr}
 	bx lr
@@ -75,13 +74,13 @@ VblSound2:					;@ r0=length, r1=pointer, r2=formats?
 
 	mov r0,r0,lsl#2
 	ldr r1,=mixSpace0
-	ldr ayptr,=ay38910_0
+	ldr r2,=ay38910_0
 	bl ay38910Mixer
 
 	ldmfd sp,{r0}
 	mov r0,r0,lsl#2
 	ldr r1,=mixSpace1
-	ldr ayptr,=ay38910_1
+	ldr r2,=ay38910_1
 	bl ay38910Mixer
 
 	ldmfd sp,{r0,r1}
@@ -151,7 +150,7 @@ soundWriteAY0:				;@ 0x2000-0x2001
 //	mov r11,r11					;@ No$GBA breakpoint
 	stmfd sp!,{r3,r12,lr}
 	tst r12,#1
-	ldr ayptr,=ay38910_0
+	ldr r1,=ay38910_0
 	adr lr,soundRet
 	beq ay38910IndexW
 	b ay38910DataW
@@ -163,7 +162,7 @@ soundWriteAY1:				;@ 0x4000-0x4001
 //	mov r11,r11					;@ No$GBA breakpoint
 	stmfd sp!,{r3,r12,lr}
 	tst r12,#1
-	ldr ayptr,=ay38910_1
+	ldr r1,=ay38910_1
 	adr lr,soundRet
 	beq ay38910IndexW
 	b ay38910DataW
