@@ -12,9 +12,9 @@
 	.global endFrame
 	.global gfxState
 //	.global oamBufferReady
+	.global gFlicker
+	.global gTwitch
 	.global g_scaling
-	.global g_twitch
-	.global g_flicker
 	.global g_gfxMask
 	.global vblIrqHandler
 	.global yStart
@@ -197,9 +197,9 @@ vblIrqHandler:
 	add r8,r8,#0x08
 	mov r7,r8,lsl#16
 
-	ldr r0,g_flicker
+	ldr r0,gFlicker
 	eors r0,r0,r0,lsl#31
-	str r0,g_flicker
+	str r0,gFlicker
 	addpl r6,r6,r6,lsl#16
 
 	ldr r11,=scrollBuff
@@ -255,9 +255,9 @@ scrolLoop2:
 
 
 ;@----------------------------------------------------------------------------
-g_flicker:		.byte 1
+gFlicker:		.byte 1
 				.space 2
-g_twitch:		.byte 0
+gTwitch:		.byte 0
 
 g_scaling:		.byte SCALED
 g_gfxMask:		.byte 0

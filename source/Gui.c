@@ -13,7 +13,7 @@
 #include "AY38910/Version.h"
 #include "SonSonVideo/Version.h"
 
-#define EMUVERSION "V0.1.1 2021-11-28"
+#define EMUVERSION "V0.1.2 2022-08-23"
 
 const fptr fnMain[] = {nullUI, subUI, subUI, subUI, subUI, subUI, subUI, subUI, subUI, subUI};
 
@@ -128,7 +128,7 @@ void uiController() {
 void uiDisplay() {
 	setupSubMenu("Display Settings");
 	drawSubItem("Display: ", dispTxt[g_scaling]);
-	drawSubItem("Scaling: ", flickTxt[g_flicker]);
+	drawSubItem("Scaling: ", flickTxt[gFlicker]);
 	drawSubItem("Gamma: ", brighTxt[g_gammaValue]);
 	drawSubItem("Disable Background: ", autoTxt[g_gfxMask&1]);
 	drawSubItem("Disable Sprites: ", autoTxt[(g_gfxMask>>4)&1]);

@@ -7,8 +7,8 @@ extern "C" {
 
 #include "SonSonVideo/SonSonVideo.h"
 
-extern u8 g_flicker;
-extern u8 g_twitch;
+extern u8 gFlicker;
+extern u8 gTwitch;
 extern u8 g_scaling;
 extern u8 g_gfxMask;
 
