@@ -7,8 +7,8 @@
 
 #define CYCLE_PSL (95)
 
-	.global cpuReset
 	.global run
+	.global cpuReset
 	.global frameTotal
 	.global waitMaskIn
 	.global waitMaskOut
@@ -110,7 +110,7 @@ soundCpuSetFIRQ:				;@ Sound latch write/read
 ;@----------------------------------------------------------------------------
 m6809CyclesPerScanline:	.long 0
 m6809CyclesPerScanline2:	.long 0
-frameTotal:			.long 0		;@ Let ui.c see frame count for savestates
+frameTotal:			.long 0		;@ Let Gui.c see frame count for savestates
 waitCountIn:		.byte 0
 waitMaskIn:			.byte 0
 waitCountOut:		.byte 0

@@ -1,7 +1,7 @@
 
 #ifdef __arm__
 
-#include "Equates.h"
+#include "Shared/EmuSettings.h"
 #include "ARM6809/ARM6809.i"
 #include "SonSonVideo/SonSonVideo.i"
 
@@ -253,7 +253,7 @@ romNum:
 	.long 0						;@ RomNumber
 romInfo:						;@ Keep emuFlags/BGmirror together for savestate/loadstate
 emuFlags:
-	.byte 0						;@ EmuFlags      (label this so UI.C can take a peek) see equates.h for bitfields
+	.byte 0						;@ EmuFlags      (label this so Gui.c can take a peek) see EmuSettings.h for bitfields
 	.byte SCALED				;@ (display type)
 	.byte 0,0					;@ (sprite follow val)
 cartFlags:

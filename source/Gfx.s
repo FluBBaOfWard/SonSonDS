@@ -1,7 +1,7 @@
 #ifdef __arm__
 
 #include "Shared/nds_asm.h"
-#include "Equates.h"
+#include "Shared/EmuSettings.h"
 #include "SonSonVideo/SonSonVideo.i"
 
 	.global gfxInit

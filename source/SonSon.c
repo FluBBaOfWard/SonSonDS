@@ -43,7 +43,7 @@ int getStateSize() {
 }
 
 static const ArcadeRom sonsonRoms[17] = {
-	// ROM_REGION( 0x10000, "maincpu", 0 ) /* 64k for code + 3*16k for the banked ROMs images */
+	// ROM_REGION( 0x10000, "maincpu", 0 ) // 64k for code + 3*16k for the banked ROMs images
 	{"ss.01e",     0x4000, 0xcd40cc54},
 	{"ss.02e",     0x4000, 0xc3476527},
 	{"ss.03e",     0x4000, 0x1fd0e729},
@@ -68,7 +68,7 @@ static const ArcadeRom sonsonRoms[17] = {
 };
 
 static const ArcadeRom sonsonjRoms[20] = {
-	// ROM_REGION( 0x10000, "maincpu", 0 ) /* 64k for code + 3*16k for the banked ROMs images */
+	// ROM_REGION( 0x10000, "maincpu", 0 ) // 64k for code + 3*16k for the banked ROMs images
 	{"ss_0.l9",    0x2000, 0x705c168f},
 	{"ss_1.j9",    0x2000, 0x0f03b57d},
 	{"ss_2.l8",    0x2000, 0xa243a15d},
@@ -95,7 +95,7 @@ static const ArcadeRom sonsonjRoms[20] = {
 	{"ssb1.k11",   0x0100, 0xa04b0cfe},
 };
 
-const ArcadeGame games[GAME_COUNT] = {
-	{"sonson",   "Son Son", 17, sonsonRoms},
-	{"sonsonj",  "Son Son (Japan)", 20, sonsonjRoms},
+const ArcadeGame sonsonGames[GAME_COUNT] = {
+	AC_GAME("sonson",   "Son Son", sonsonRoms)
+	AC_GAME("sonsonj",  "Son Son (Japan)", sonsonjRoms)
 };
