@@ -8,6 +8,7 @@
 #define CYCLE_PSL (95)
 
 	.global run
+	.global stepFrame
 	.global cpuReset
 	.global frameTotal
 	.global waitMaskIn
@@ -24,7 +25,7 @@
 	.section .text
 	.align 2
 ;@----------------------------------------------------------------------------
-run:		;@ Return after 1 frame
+run:						;@ Return after X frame(s)
 	.type   run STT_FUNC
 ;@----------------------------------------------------------------------------
 	ldrh r0,waitCountIn
@@ -57,15 +58,13 @@ sonFrameLoop:
 ;@----------------------------------------------------------------------------
 	ldr m6809optbl,=m6809CPU2
 	ldr r0,m6809CyclesPerScanline2
-	b m6809RestoreAndRunXCycles
-audioEnd:
+	bl m6809RestoreAndRunXCycles
 	add r0,m6809optbl,#m6809Regs
 	stmia r0,{m6809f-m6809pc,m6809sp}	;@ Save M6809 state
 ;@--------------------------------------
 	ldr m6809optbl,=m6809OpTable
 	ldr r0,m6809CyclesPerScanline
-	b m6809RestoreAndRunXCycles
-sonM6809End:
+	bl m6809RestoreAndRunXCycles
 	add r0,m6809optbl,#m6809Regs
 	stmia r0,{m6809f-m6809pc,m6809sp}	;@ Save M6809 state
 ;@--------------------------------------
@@ -117,6 +116,38 @@ waitCountOut:		.byte 0
 waitMaskOut:		.byte 0
 
 ;@----------------------------------------------------------------------------
+stepFrame:					;@ Return after 1 frame
+	.type   stepFrame STT_FUNC
+;@----------------------------------------------------------------------------
+	stmfd sp!,{r4-r11,lr}
+;@----------------------------------------------------------------------------
+sonStepLoop:
+;@----------------------------------------------------------------------------
+	ldr m6809optbl,=m6809CPU2
+	ldr r0,m6809CyclesPerScanline2
+	bl m6809RestoreAndRunXCycles
+	add r0,m6809optbl,#m6809Regs
+	stmia r0,{m6809f-m6809pc,m6809sp}	;@ Save M6809 state
+;@--------------------------------------
+	ldr m6809optbl,=m6809OpTable
+	ldr r0,m6809CyclesPerScanline
+	bl m6809RestoreAndRunXCycles
+	add r0,m6809optbl,#m6809Regs
+	stmia r0,{m6809f-m6809pc,m6809sp}	;@ Save M6809 state
+;@--------------------------------------
+	bl soundCpuTimer
+	ldr sonptr,=sonVideo_0
+	bl doScanline
+	cmp r0,#0
+	bne sonStepLoop
+;@----------------------------------------------------------------------------
+	ldr r1,frameTotal
+	add r1,r1,#1
+	str r1,frameTotal
+
+	ldmfd sp!,{r4-r11,lr}
+	bx lr
+;@----------------------------------------------------------------------------
 cpuReset:		;@ Called by loadCart/resetGame
 ;@----------------------------------------------------------------------------
 	stmfd sp!,{lr}
@@ -137,11 +168,7 @@ cpuReset:		;@ Called by loadCart/resetGame
 	adr r4,cpuMapData
 	bl map6809Memory
 
-	adr r0,sonM6809End
-	str r0,[m6809optbl,#m6809NextTimeout]
-	str r0,[m6809optbl,#m6809NextTimeout_]
-
-	mov r0,#0
+	mov r0,m6809optbl
 	bl m6809Reset
 
 
@@ -154,11 +181,7 @@ cpuReset:		;@ Called by loadCart/resetGame
 	adr r4,cpuMapData+8
 	bl map6809Memory
 
-	adr r0,audioEnd
-	str r0,[m6809optbl,#m6809NextTimeout]
-	str r0,[m6809optbl,#m6809NextTimeout_]
-
-	mov r0,#0
+	mov r0,m6809optbl
 	bl m6809Reset
 
 	ldmfd sp!,{lr}

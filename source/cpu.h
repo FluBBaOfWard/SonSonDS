@@ -12,6 +12,7 @@ extern u8 waitMaskOut;
 extern ARM6809Core m6809CPU2;
 
 void run(void);
+void stepFrame(void);
 void cpuReset(void);
 
 #ifdef __cplusplus
