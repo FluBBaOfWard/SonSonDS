@@ -10,8 +10,9 @@
 	.global paletteTxAll
 	.global refreshGfx
 	.global endFrame
+	.global updateLCDRefresh
+
 	.global gfxState
-//	.global oamBufferReady
 	.global gFlicker
 	.global gTwitch
 	.global gScaling
@@ -41,6 +42,8 @@ gfxInit:					;@ Called from machineInit
 	bl setupSpriteScaling
 
 	bl sonVideoInit
+	mov r0,#55
+	bl setLCDFPS
 
 	ldmfd sp!,{pc}
 
@@ -181,6 +184,18 @@ nomap3:
 	bx lr
 
 ;@----------------------------------------------------------------------------
+updateLCDRefresh:
+	.type updateLCDRefresh STT_FUNC
+;@----------------------------------------------------------------------------
+	ldr r0,=emuSettings
+	ldr r0,[r0]
+	tst r0,#1<<19
+	moveq r0,#60-1
+	movne r0,#55-1
+	ldr r1,=fpsNominal
+	strb r0,[r1]
+	bx lr
+;@----------------------------------------------------------------------------
 vblIrqHandler:
 	.type vblIrqHandler STT_FUNC
 ;@----------------------------------------------------------------------------
@@ -249,6 +264,30 @@ scrolLoop2:
 	ldrb r1,gGfxMask
 	bic r0,r0,r1
 	strh r0,[r8,#REG_WININ]
+
+	ldr r0,=emuSettings
+	ldr r0,[r0]
+	ands r0,r0,#1<<19
+	beq exit55Hz
+	ldr r0,=pauseEmulation
+	ldr r0,[r0]
+	cmp r0,#0
+	bne exit55Hz
+hz55Start:
+	mov r0,#2
+hz55Loop0:
+	ldrh r1,[r8,#REG_VCOUNT]
+	cmp r1,#212
+	beq hz55Loop0
+hz55Loop1:
+	ldrh r1,[r8,#REG_VCOUNT]
+	cmp r1,#212
+	bmi hz55Loop1
+	mov r1,#202
+	strh r1,[r8,#REG_VCOUNT]
+	subs r0,r0,#1
+	bne hz55Loop0
+exit55Hz:
 
 	blx scanKeys
 	ldmfd sp!,{r4-r11,pc}

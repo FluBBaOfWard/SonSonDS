@@ -14,7 +14,11 @@
 #include "AY38910/Version.h"
 #include "SonSonVideo/Version.h"
 
-#define EMUVERSION "V0.1.2 2022-10-04"
+#define EMUVERSION "V0.1.2 2022-11-27"
+
+#define ALLOW_REFRESH_CHG	(1<<19)
+
+static void refreshChgSet(void);
 
 static void uiDebug(void);
 
@@ -26,7 +30,7 @@ const fptr fnList2[] = {ui4, ui5, ui6, ui7, ui8};
 const fptr fnList3[] = {uiDummy};
 const fptr fnList4[] = {autoBSet, autoASet, controllerSet, swapABSet};
 const fptr fnList5[] = {scalingSet, flickSet, gammaSet};
-const fptr fnList6[] = {speedSet, autoStateSet, autoSettingsSet, autoNVRAMSet, autoPauseGameSet, powerSaveSet, screenSwapSet, sleepSet};
+const fptr fnList6[] = {speedSet, refreshChgSet, autoStateSet, autoSettingsSet, autoNVRAMSet, autoPauseGameSet, powerSaveSet, screenSwapSet, sleepSet};
 const fptr fnList7[] = {debugTextSet, bgrLayerSet, sprLayerSet, stepFrame};
 const fptr fnList8[] = {coinageSet, coinAffectSet, demoSet, livesSet, difficultSet, bonusSet, secondPlayerSet, flipSet, serviceSet, freezeSet};
 const fptr fnList9[] = {quickSelectGame, quickSelectGame};
@@ -144,6 +148,7 @@ void uiDisplay() {
 void uiSettings() {
 	setupSubMenu("Settings");
 	drawSubItem("Speed:", speedTxt[(emuSettings>>6)&3]);
+	drawSubItem("Allow Refresh Change:", autoTxt[(emuSettings&ALLOW_REFRESH_CHG)>>19]);
 	drawSubItem("Autoload State:", autoTxt[(emuSettings>>2)&1]);
 	drawSubItem("Autosave Settings:", autoTxt[(emuSettings>>9)&1]);
 	drawSubItem("Autosave NVRAM:", autoTxt[(emuSettings>>10)&1]);
@@ -234,6 +239,11 @@ void bgrLayerSet() {
 /// Turn on/off rendering of sprites
 void sprLayerSet() {
 	gGfxMask ^= 0x10;
+}
+
+void refreshChgSet() {
+	emuSettings ^= ALLOW_REFRESH_CHG;
+	updateLCDRefresh();
 }
 
 

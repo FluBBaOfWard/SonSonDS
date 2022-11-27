@@ -2,8 +2,10 @@ SonSonDS revision history
 -=-=-=-=-=-=-=-=-=-=-=-=-
 
 
-V0.1.2 - 2022-10-04 (FluBBa)
-	Cleaned up source.
+V0.1.2 - 2022-11-27 (FluBBa)
+	Fixed screen refresh rate (55Hz).
+	Added new debug menu.
+	Better menu traversing.
 
 V0.1.1 - 2021-11-28 (FluBBa)
 	Fixed missing sound channel.
