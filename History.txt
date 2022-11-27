@@ -2,6 +2,9 @@ SonSonDS revision history
 -=-=-=-=-=-=-=-=-=-=-=-=-
 
 
+V0.1.3 - 2022-11-27 (FluBBa)
+	Added coin counters to about tab.
+
 V0.1.2 - 2022-11-27 (FluBBa)
 	Fixed screen refresh rate (55Hz).
 	Added new debug menu.

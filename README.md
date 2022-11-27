@@ -1,4 +1,4 @@
-# SonSonDS V0.1.2
+# SonSonDS V0.1.3
 
 This is a Son Son - Arcade emulator for the NDS.
 

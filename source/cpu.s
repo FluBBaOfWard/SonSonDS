@@ -152,7 +152,7 @@ cpuReset:		;@ Called by loadCart/resetGame
 ;@----------------------------------------------------------------------------
 	stmfd sp!,{lr}
 
-;@---Speed - 1.5MHz / 55.4Hz / 282 lines		;SonSon M6809.
+;@---Speed - 1.5MHz / 55.4Hz / 282 lines	;SonSon M6809.
 	ldr r0,=CYCLE_PSL
 	str r0,m6809CyclesPerScanline
 ;@--------------------------------------
@@ -172,7 +172,7 @@ cpuReset:		;@ Called by loadCart/resetGame
 	bl m6809Reset
 
 
-;@---Speed - 1.5MHz / 60Hz / 272 lines		;SonSon M6809 audio.
+;@---Speed - 1.5MHz / 55.4Hz / 282 lines		;SonSon M6809 audio.
 	ldr r0,=CYCLE_PSL
 	str r0,m6809CyclesPerScanline2
 ;@--------------------------------------

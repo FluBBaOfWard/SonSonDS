@@ -14,7 +14,7 @@
 #include "AY38910/Version.h"
 #include "SonSonVideo/Version.h"
 
-#define EMUVERSION "V0.1.2 2022-11-27"
+#define EMUVERSION "V0.1.3 2022-11-27"
 
 #define ALLOW_REFRESH_CHG	(1<<19)
 
@@ -124,6 +124,12 @@ void uiAbout() {
 	drawMenuText("Start:  Start", 5, 0);
 	drawMenuText("DPad:   Move character", 6, 0);
 	drawMenuText("B:      Shot", 7, 0);
+
+	char s[10];
+	int2Str(coinCounter0, s);
+	drawStrings("CoinCounter1:", s, 1, 17, 0);
+	int2Str(coinCounter1, s);
+	drawStrings("CoinCounter2:", s, 1, 18, 0);
 
 	drawMenuText("SonSonDS     " EMUVERSION, 21, 0);
 	drawMenuText("ARM6809      " ARM6809VERSION, 22, 0);
