@@ -5,14 +5,6 @@
 #include "SonSonVideo/SonSonVideo.i"
 #include "Shared/EmuMenu.i"
 
-	.global ioInit
-	.global ioReset
-	.global IO_R
-	.global IO_W
-	.global soundIO_R
-	.global convertInput
-	.global refreshEMUjoypads
-
 	.global joyCfg
 	.global EMUinput
 	.global gDipSwitch0
@@ -21,6 +13,14 @@
 	.global gDipSwitch3
 	.global coinCounter0
 	.global coinCounter1
+
+	.global ioInit
+	.global ioReset
+	.global convertInput
+	.global refreshEMUjoypads
+	.global IO_R
+	.global IO_W
+	.global soundIO_R
 
 	.syntax unified
 	.arm

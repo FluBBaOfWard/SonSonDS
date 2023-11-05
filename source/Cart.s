@@ -5,9 +5,6 @@
 #include "ARM6809/ARM6809.i"
 #include "SonSonVideo/SonSonVideo.i"
 
-	.global machineInit
-	.global loadCart
-	.global m6809Mapper
 	.global romNum
 	.global emuFlags
 	.global cartFlags
@@ -15,12 +12,14 @@
 	.global vromBase0
 	.global vromBase1
 	.global promsBase
-
 	.global soundCpuRam
 	.global NV_RAM
 	.global EMU_RAM
 	.global ROM_Space
 
+	.global machineInit
+	.global loadCart
+	.global m6809Mapper
 
 
 	.syntax unified
@@ -135,16 +134,6 @@ tbLoop1:
 	add r0,r0,#1
 	cmp r0,#0x07
 	bne tbLoop1
-
-//	ldr r7,=romZ80R0
-//tbLoop2:
-//	add r1,r3,r0,lsl#13
-//	str r1,[r4,r0,lsl#2]		;@ MemMap
-//	str r7,[r5,r0,lsl#2]		;@ RdMem
-//	str r8,[r6,r0,lsl#2]		;@ WrMem
-//	add r0,r0,#1
-//	cmp r0,#0x0E
-//	bne tbLoop2
 
 	ldr r7,=empty_R
 	ldr r8,=empty_W

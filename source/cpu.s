@@ -7,18 +7,18 @@
 
 #define CYCLE_PSL (96)
 
-	.global run
-	.global stepFrame
-	.global cpuInit
-	.global cpuReset
 	.global frameTotal
 	.global waitMaskIn
 	.global waitMaskOut
 	.global soundCpuSetIRQ
 	.global soundCpuSetFIRQ
-
 	.global m6809CPU0
 	.global m6809CPU1
+
+	.global run
+	.global stepFrame
+	.global cpuInit
+	.global cpuReset
 
 
 	.syntax unified

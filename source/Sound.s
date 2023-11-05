@@ -5,6 +5,11 @@
 
 #define COUNTER (65)
 
+	.extern pauseEmulation
+
+	.global ay38910_0
+	.global ay38910_1
+
 	.global soundInit
 	.global soundReset
 	.global VblSound2
@@ -13,13 +18,7 @@
 	.global soundCpuTimer
 	.global soundWriteAY0
 	.global soundWriteAY1
-	.global ay38910_0
-	.global ay38910_1
 
-	.extern pauseEmulation
-
-
-;@----------------------------------------------------------------------------
 
 	.syntax unified
 	.arm

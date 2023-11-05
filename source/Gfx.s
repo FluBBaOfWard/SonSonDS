@@ -4,24 +4,22 @@
 #include "Shared/EmuSettings.h"
 #include "SonSonVideo/SonSonVideo.i"
 
+	.global gFlicker
+	.global gTwitch
+	.global gScaling
+	.global gGfxMask
+	.global yStart
+	.global EMUPALBUFF
+	.global sonVideo_0
+
 	.global gfxInit
 	.global gfxReset
 	.global paletteInit
 	.global paletteTxAll
 	.global refreshGfx
 	.global endFrame
-	.global updateLCDRefresh
-
-	.global gfxState
-	.global gFlicker
-	.global gTwitch
-	.global gScaling
-	.global gGfxMask
 	.global vblIrqHandler
-	.global yStart
-	.global EMUPALBUFF
-
-	.global sonVideo_0
+	.global updateLCDRefresh
 
 
 	.syntax unified
@@ -235,7 +233,6 @@ scrolLoop2:
 
 
 	mov r8,#REG_BASE
-	add r7,r8,#0x1000			;@ REG_BASE_SUB
 	strh r8,[r8,#REG_DMA0CNT_H]	;@ DMA0 stop
 
 	add r0,r8,#REG_DMA0SAD
@@ -246,19 +243,19 @@ scrolLoop2:
 	ldr r3,=0x96600002			;@ noIRQ hblank 32bit repeat incsrc inc_reloaddst, 2 word
 	stmia r0,{r1-r3}			;@ DMA0 go
 
-	add r1,r8,#REG_DMA3SAD
+	add r0,r8,#REG_DMA3SAD
 
-	ldr r2,dmaOamBuffer			;@ DMA3 src, OAM transfer:
-	mov r3,#OAM					;@ DMA3 dst
-	mov r4,#0x84000000			;@ noIRQ 32bit incsrc incdst
-	orr r4,r4,#24*2				;@ 24 sprites * 2 longwords
-	stmia r1,{r2-r4}			;@ DMA3 go
+	ldr r1,dmaOamBuffer			;@ DMA3 src, OAM transfer:
+	mov r2,#OAM					;@ DMA3 dst
+	mov r3,#0x84000000			;@ noIRQ 32bit incsrc incdst
+	orr r3,r3,#24*2				;@ 24 sprites * 2 longwords
+	stmia r0,{r1-r3}			;@ DMA3 go
 
-	ldr r2,=EMUPALBUFF			;@ DMA3 src, Palette transfer:
-	mov r3,#BG_PALETTE			;@ DMA3 dst
-	mov r4,#0x84000000			;@ noIRQ 32bit incsrc incdst
-	orr r4,r4,#0x100			;@ 256 words (1024 bytes)
-	stmia r1,{r2-r4}			;@ DMA3 go
+	ldr r1,=EMUPALBUFF			;@ DMA3 src, Palette transfer:
+	mov r2,#BG_PALETTE			;@ DMA3 dst
+	mov r3,#0x84000000			;@ noIRQ 32bit incsrc incdst
+	orr r3,r3,#0x100			;@ 256 words (1024 bytes)
+	stmia r0,{r1-r3}			;@ DMA3 go
 
 	mov r0,#0x0011
 	ldrb r1,gGfxMask
