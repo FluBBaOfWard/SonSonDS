@@ -9,14 +9,16 @@
 
 	.global run
 	.global stepFrame
+	.global cpuInit
 	.global cpuReset
 	.global frameTotal
 	.global waitMaskIn
 	.global waitMaskOut
 	.global soundCpuSetIRQ
 	.global soundCpuSetFIRQ
-	.global m6809CPU2
 
+	.global m6809CPU0
+	.global m6809CPU1
 
 
 	.syntax unified
@@ -56,16 +58,16 @@ runStart:
 ;@----------------------------------------------------------------------------
 sonFrameLoop:
 ;@----------------------------------------------------------------------------
-	ldr m6809optbl,=m6809CPU2
+	ldr m6809ptr,=m6809CPU1
 	ldr r0,m6809CyclesPerScanline2
 	bl m6809RestoreAndRunXCycles
-	add r0,m6809optbl,#m6809Regs
+	add r0,m6809ptr,#m6809Regs
 	stmia r0,{m6809f-m6809pc,m6809sp}	;@ Save M6809 state
 ;@--------------------------------------
-	ldr m6809optbl,=m6809OpTable
+	ldr m6809ptr,=m6809CPU0
 	ldr r0,m6809CyclesPerScanline
 	bl m6809RestoreAndRunXCycles
-	add r0,m6809optbl,#m6809Regs
+	add r0,m6809ptr,#m6809Regs
 	stmia r0,{m6809f-m6809pc,m6809sp}	;@ Save M6809 state
 ;@--------------------------------------
 	bl soundCpuTimer
@@ -95,17 +97,17 @@ sonFrameLoop:
 ;@----------------------------------------------------------------------------
 soundCpuSetIRQ:					;@ Timer
 ;@----------------------------------------------------------------------------
-	stmfd sp!,{m6809optbl,lr}
-	ldr m6809optbl,=m6809CPU2
+	stmfd sp!,{m6809ptr,lr}
+	ldr m6809ptr,=m6809CPU1
 	bl m6809SetIRQPin
-	ldmfd sp!,{m6809optbl,pc}
+	ldmfd sp!,{m6809ptr,pc}
 ;@----------------------------------------------------------------------------
 soundCpuSetFIRQ:				;@ Sound latch write/read
 ;@----------------------------------------------------------------------------
-	stmfd sp!,{m6809optbl,lr}
-	ldr m6809optbl,=m6809CPU2
+	stmfd sp!,{m6809ptr,lr}
+	ldr m6809ptr,=m6809CPU1
 	bl m6809SetFIRQPin
-	ldmfd sp!,{m6809optbl,pc}
+	ldmfd sp!,{m6809ptr,pc}
 ;@----------------------------------------------------------------------------
 m6809CyclesPerScanline:	.long 0
 m6809CyclesPerScanline2:	.long 0
@@ -123,16 +125,16 @@ stepFrame:					;@ Return after 1 frame
 ;@----------------------------------------------------------------------------
 sonStepLoop:
 ;@----------------------------------------------------------------------------
-	ldr m6809optbl,=m6809CPU2
+	ldr m6809ptr,=m6809CPU1
 	ldr r0,m6809CyclesPerScanline2
 	bl m6809RestoreAndRunXCycles
-	add r0,m6809optbl,#m6809Regs
+	add r0,m6809ptr,#m6809Regs
 	stmia r0,{m6809f-m6809pc,m6809sp}	;@ Save M6809 state
 ;@--------------------------------------
-	ldr m6809optbl,=m6809OpTable
+	ldr m6809ptr,=m6809CPU0
 	ldr r0,m6809CyclesPerScanline
 	bl m6809RestoreAndRunXCycles
-	add r0,m6809optbl,#m6809Regs
+	add r0,m6809ptr,#m6809Regs
 	stmia r0,{m6809f-m6809pc,m6809sp}	;@ Save M6809 state
 ;@--------------------------------------
 	bl soundCpuTimer
@@ -148,6 +150,16 @@ sonStepLoop:
 	ldmfd sp!,{r4-r11,lr}
 	bx lr
 ;@----------------------------------------------------------------------------
+cpuInit:			;@ Called by machineInit
+;@----------------------------------------------------------------------------
+	stmfd sp!,{lr}
+	ldr r0,=m6809CPU0
+	bl m6809Init
+	ldr r0,=m6809CPU1
+	bl m6809Init
+	ldmfd sp!,{lr}
+	bx lr
+;@----------------------------------------------------------------------------
 cpuReset:		;@ Called by loadCart/resetGame
 ;@----------------------------------------------------------------------------
 	stmfd sp!,{lr}
@@ -156,19 +168,12 @@ cpuReset:		;@ Called by loadCart/resetGame
 	ldr r0,=CYCLE_PSL
 	str r0,m6809CyclesPerScanline
 ;@--------------------------------------
-	ldr m6809optbl,=m6809OpTable
-
-	ldr r0,=m6809CPU2
-	mov r1,m6809optbl
-	ldr r2,=m6809Size
-	bl memcpy
-
-;@--------------------------------------
+	ldr m6809ptr,=m6809CPU0
 
 	adr r4,cpuMapData
 	bl map6809Memory
 
-	mov r0,m6809optbl
+	mov r0,m6809ptr
 	bl m6809Reset
 
 
@@ -176,12 +181,12 @@ cpuReset:		;@ Called by loadCart/resetGame
 	ldr r0,=CYCLE_PSL
 	str r0,m6809CyclesPerScanline2
 ;@--------------------------------------
-	ldr m6809optbl,=m6809CPU2
+	ldr m6809ptr,=m6809CPU1
 
 	adr r4,cpuMapData+8
 	bl map6809Memory
 
-	mov r0,m6809optbl
+	mov r0,m6809ptr
 	bl m6809Reset
 
 	ldmfd sp!,{lr}
@@ -219,10 +224,15 @@ m6809DataLoop:
 
 ;@----------------------------------------------------------------------------
 #ifdef NDS
-	.section .dtcm, "ax", %progbits				;@ For the NDS
+	.section .dtcm, "ax", %progbits		;@ For the NDS
+#elif GBA
+	.section .iwram, "ax", %progbits	;@ For the GBA
 #endif
+	.align 2
 ;@----------------------------------------------------------------------------
-m6809CPU2:
+m6809CPU0:
+	.space m6809Size
+m6809CPU1:
 	.space m6809Size
 ;@----------------------------------------------------------------------------
 	.end
