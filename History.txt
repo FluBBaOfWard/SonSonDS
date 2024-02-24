@@ -2,7 +2,7 @@ SonSonDS revision history
 -=-=-=-=-=-=-=-=-=-=-=-=-
 
 
-V0.1.3 - 2023-11-05 (FluBBa)
+V0.1.3 - 2024-02-24 (FluBBa)
 	Added coin counters to about tab.
 
 V0.1.2 - 2022-11-27 (FluBBa)

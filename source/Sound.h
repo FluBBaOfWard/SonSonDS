@@ -9,6 +9,9 @@ extern "C" {
 
 #include "AY38910/AY38910.h"
 
+#define sample_rate 55930
+#define buffer_size (512+10)
+
 extern AY38910 ay38910_0;
 extern AY38910 ay38910_1;
 

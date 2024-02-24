@@ -36,7 +36,7 @@ GRAPHICS	:=	graphics \
 # options for code generation
 #---------------------------------------------------------------------------------
 ARCH	:=	-march=armv5te -mtune=arm946e-s -mthumb -mthumb-interwork
-FLAGS	:=	-DARM9 -DNDS
+FLAGS	:=	-DARM9 -DNDS -DAY_UPSHIFT=2
 
 CFLAGS	:=	-g -Wall -O2 \
 			-fomit-frame-pointer \

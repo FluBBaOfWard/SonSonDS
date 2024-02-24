@@ -42,24 +42,24 @@ int getStateSize() {
 	return size;
 }
 
-static const ArcadeRom sonsonRoms[17] = {
-	// ROM_REGION( 0x10000, "maincpu", 0 ) // 64k for code + 3*16k for the banked ROMs images
+static const ArcadeRom sonsonRoms[22] = {
+	{ROM_REGION,   0x10000, (int)&mainCpu}, // 64k for code + 3*16k for the banked ROMs images
 	{"ss.01e",     0x4000, 0xcd40cc54},
 	{"ss.02e",     0x4000, 0xc3476527},
 	{"ss.03e",     0x4000, 0x1fd0e729},
-	// ROM_REGION( 0x10000, "audiocpu", 0 )
+	{ROM_REGION,   0x10000, (int)&soundCpu},
 	{"ss_6.c11",   0x2000, 0x1135c48a},
-	// ROM_REGION( 0x04000, "gfx1", 0 )
+	{ROM_REGION,   0x04000, (int)&vromBase0},
 	{"ss_7.b6",    0x2000, 0x990890b1},
 	{"ss_8.b5",    0x2000, 0x9388ff82},
-	// ROM_REGION( 0x0c000, "gfx2", 0 )
+	{ROM_REGION,   0x0C000, (int)&vromBase1},
 	{"ss_9.m5",    0x2000, 0x8cb1cacf},
 	{"ss_10.m6",   0x2000, 0xf802815e},
 	{"ss_11.m3",   0x2000, 0x4dbad88a},
 	{"ss_12.m4",   0x2000, 0xaa05e687},
 	{"ss_13.m1",   0x2000, 0x66119bfa},
 	{"ss_14.m2",   0x2000, 0xe14ef54e},
-	// ROM_REGION( 0x0340, "proms", 0 )
+	{ROM_REGION,   0x0340, (int)&promBase},
 	{"ssb4.b2",    0x0020, 0xc8eaf234},
 	{"ssb5.b1",    0x0020, 0x0e434add},
 	{"ssb2.c4",    0x0100, 0xc53321c6},
@@ -67,27 +67,27 @@ static const ArcadeRom sonsonRoms[17] = {
 	{"ssb1.k11",   0x0100, 0xa04b0cfe},
 };
 
-static const ArcadeRom sonsonjRoms[20] = {
-	// ROM_REGION( 0x10000, "maincpu", 0 ) // 64k for code + 3*16k for the banked ROMs images
+static const ArcadeRom sonsonjRoms[25] = {
+	{ROM_REGION,   0x10000, (int)&mainCpu}, // 64k for code + 3*16k for the banked ROMs images
 	{"ss_0.l9",    0x2000, 0x705c168f},
 	{"ss_1.j9",    0x2000, 0x0f03b57d},
 	{"ss_2.l8",    0x2000, 0xa243a15d},
 	{"ss_3.j8",    0x2000, 0xcb64681a},
 	{"ss_4.l7",    0x2000, 0x4c3e9441},
 	{"ss_5.j7",    0x2000, 0x847f660c},
-	// ROM_REGION( 0x10000, "audiocpu", 0 )
+	{ROM_REGION,   0x10000, (int)&soundCpu},
 	{"ss_6.c11",   0x2000, 0x1135c48a},
-	// ROM_REGION( 0x04000, "gfx1", 0 )
+	{ROM_REGION,   0x04000, (int)&vromBase0},
 	{"ss_7.b6",    0x2000, 0x990890b1},
 	{"ss_8.b5",    0x2000, 0x9388ff82},
-	// ROM_REGION( 0x0c000, "gfx2", 0 )
+	{ROM_REGION,   0x0C000, (int)&vromBase1},
 	{"ss_9.m5",    0x2000, 0x8cb1cacf},
 	{"ss_10.m6",   0x2000, 0xf802815e},
 	{"ss_11.m3",   0x2000, 0x4dbad88a},
 	{"ss_12.m4",   0x2000, 0xaa05e687},
 	{"ss_13.m1",   0x2000, 0x66119bfa},
 	{"ss_14.m2",   0x2000, 0xe14ef54e},
-	// ROM_REGION( 0x0340, "proms", 0 )
+	{ROM_REGION,   0x0340, (int)&promBase},
 	{"ssb4.b2",    0x0020, 0xc8eaf234},
 	{"ssb5.b1",    0x0020, 0x0e434add},
 	{"ssb2.c4",    0x0100, 0xc53321c6},

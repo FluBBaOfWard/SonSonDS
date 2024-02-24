@@ -9,9 +9,11 @@
 	.global emuFlags
 	.global cartFlags
 	.global romStart
+	.global mainCpu
+	.global soundCpu
 	.global vromBase0
 	.global vromBase1
-	.global promsBase
+	.global promBase
 	.global soundCpuRam
 	.global NV_RAM
 	.global EMU_RAM
@@ -107,18 +109,16 @@ loadCart: 		;@ Called from C:  r0=rom number, r1=emuFlags
 	str r1,emuFlags
 
 //	ldr r3,=rawRom
-	ldr r3,=ROM_Space
-
-								;@ r3=romBase til end of loadcart so DON'T FUCK IT UP
-	str r3,romStart				;@ Set rom base
-	add r0,r3,#0xC000			;@ 0xC000
-	str r0,cpu2Base				;@ Sound cpu rom
-	add r0,r0,#0x2000			;@ 0x2000
-	str r0,vromBase0			;@ Chars
-	add r0,r0,#0x4000
-	str r0,vromBase1			;@ Sprites
-	add r0,r0,#0xC000
-	str r0,promsBase			;@ Proms
+	ldr r3,=ROM_Space			;@ r3=romBase til end of loadcart so DON'T FUCK IT UP
+//	str r3,romStart				;@ Set rom base
+//	add r0,r3,#0xC000			;@ 0xC000
+//	str r0,soundCpu				;@ Sound cpu rom
+//	add r0,r0,#0x2000			;@ 0x2000
+//	str r0,vromBase0			;@ Chars
+//	add r0,r0,#0x4000
+//	str r0,vromBase1			;@ Sprites
+//	add r0,r0,#0xC000
+//	str r0,promBase			;@ Proms
 
 	ldr r4,=MEMMAPTBL_
 	ldr r5,=RDMEMTBL_
@@ -250,14 +250,15 @@ cartFlags:
 	.space 3
 
 romStart:
+mainCpu:
 	.long 0
-cpu2Base:
+soundCpu:
 	.long 0
 vromBase0:
 	.long 0
 vromBase1:
 	.long 0
-promsBase:
+promBase:
 	.long 0
 	.pool
 

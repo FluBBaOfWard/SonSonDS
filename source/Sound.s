@@ -71,13 +71,11 @@ VblSound2:					;@ r0=length, r1=pointer, r2=formats?
 	cmp r2,#0
 	bne silenceMix
 
-	mov r0,r0,lsl#2
 	ldr r1,=mixSpace0
 	ldr r2,=ay38910_0
 	bl ay38910Mixer
 
 	ldmfd sp,{r0}
-	mov r0,r0,lsl#2
 	ldr r1,=mixSpace1
 	ldr r2,=ay38910_1
 	bl ay38910Mixer
@@ -88,31 +86,12 @@ VblSound2:					;@ r0=length, r1=pointer, r2=formats?
 //	ldr r12,soundFilter
 mixLoop01:
 	ldrsh r4,[r2],#2
-	ldrsh r5,[r2],#2
-	add r4,r4,r5
-	ldrsh r5,[r2],#2
-	add r4,r4,r5
-	ldrsh r5,[r2],#2
-	add r4,r4,r5
-
-	ldrsh r5,[r3],#2
-	add r4,r4,r5
-	ldrsh r5,[r3],#2
-	add r4,r4,r5
-	ldrsh r5,[r3],#2
-	add r4,r4,r5
 	ldrsh r5,[r3],#2
 	add r4,r4,r5
 
-//	sub r12,r12,r12,asr#2
-//	add r12,r12,r4,lsl#16-3-2
-//	mov r4,r12,lsr#16
-
-	mov r4,r4,lsl#16-3
-	mov r4,r4,lsr#16
-	orr r4,r4,r4,lsl#16
+	mov r4,r4,lsr#1
 	subs r0,r0,#1
-	strpl r4,[r1],#4
+	strhpl r4,[r1],#2
 	bhi mixLoop01
 
 //	str r12,soundFilter
@@ -124,7 +103,7 @@ silenceMix:
 	mov r12,r0
 	mov r2,#0
 silenceLoop:
-	subs r12,r12,#1
+	subs r12,r12,#2
 	strpl r2,[r1],#4
 	bhi silenceLoop
 

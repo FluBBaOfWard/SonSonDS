@@ -96,7 +96,7 @@ paletteInit:		;@ r0-r3 modified.
 ;@----------------------------------------------------------------------------
 	stmfd sp!,{r4-r9,lr}
 	mov r1,r0					;@ Gamma value = 0 -> 4
-	ldr r8,=promsBase			;@ Proms
+	ldr r8,=promBase			;@ Proms
 	ldr r8,[r8]
 	mov r7,#0xF0
 	ldr r6,=MAPPED_RGB
@@ -145,7 +145,7 @@ paletteTxAll:				;@ Called from ui.c
 ;@----------------------------------------------------------------------------
 	stmfd sp!,{r4-r5}
 
-	ldr r2,=promsBase			;@ Proms
+	ldr r2,=promBase			;@ Proms
 	ldr r2,[r2]
 	add r2,r2,#64
 	ldr r3,=MAPPED_RGB
