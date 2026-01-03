@@ -1,9 +1,10 @@
-
 #ifdef __arm__
 
 #include "Shared/EmuSettings.h"
 #include "ARM6809/ARM6809.i"
 #include "SonSonVideo/SonSonVideo.i"
+
+//#define EMBEDDED_ROM
 
 	.global romNum
 	.global emuFlags
@@ -30,8 +31,9 @@
 	.section .rodata
 	.align 2
 
+#ifdef EMBEDDED_ROM
 rawRom:
-/*
+
 // Son Son
 // Main cpu
 	.incbin "sonson/ss.01e"
@@ -55,7 +57,7 @@ rawRom:
 	.incbin "sonson/ssb2.c4"
 	.incbin "sonson/ssb3.h7"
 	.incbin "sonson/ssb1.k11"
-*/
+
 /*
 // Son Son (Japan)
 // Main cpu
@@ -84,6 +86,7 @@ rawRom:
 	.incbin "sonson/ssb3.h7"
 	.incbin "sonson/ssb1.k11"
 */
+#endif
 	.align 2
 ;@----------------------------------------------------------------------------
 machineInit: 	;@ Called from C
@@ -108,17 +111,19 @@ loadCart: 		;@ Called from C:  r0=rom number, r1=emuFlags
 //	str r0,romNum
 	str r1,emuFlags
 
-//	ldr r3,=rawRom
 	ldr r3,=ROM_Space			;@ r3=romBase til end of loadcart so DON'T FUCK IT UP
-//	str r3,romStart				;@ Set rom base
-//	add r0,r3,#0xC000			;@ 0xC000
-//	str r0,soundCpu				;@ Sound cpu rom
-//	add r0,r0,#0x2000			;@ 0x2000
-//	str r0,vromBase0			;@ Chars
-//	add r0,r0,#0x4000
-//	str r0,vromBase1			;@ Sprites
-//	add r0,r0,#0xC000
-//	str r0,promBase			;@ Proms
+#ifdef EMBEDDED_ROM
+	ldr r3,=rawRom
+	str r3,romStart				;@ Set rom base
+	add r0,r3,#0xC000			;@ 0xC000
+	str r0,soundCpu				;@ Sound cpu rom
+	add r0,r0,#0x2000			;@ 0x2000
+	str r0,vromBase0			;@ Chars
+	add r0,r0,#0x4000
+	str r0,vromBase1			;@ Sprites
+	add r0,r0,#0xC000
+	str r0,promBase				;@ Proms
+#endif
 
 	ldr r4,=MEMMAPTBL_
 	ldr r5,=RDMEMTBL_
@@ -262,7 +267,12 @@ promBase:
 	.long 0
 	.pool
 
+#ifdef GBA
+	.section .sbss				;@ This is EWRAM on GBA with devkitARM
+#else
 	.section .bss
+#endif
+	.align 2
 WRMEMTBL_:
 	.space 256*4
 RDMEMTBL_:

@@ -57,14 +57,17 @@ int main(int argc, char **argv) {
 		enableExit = true;
 	}
 	setupGraphics();
-	machineInit();
-
 	setupStream();
 	irqSet(IRQ_VBLANK, myVblank);
+	SetYtrigger(230);
+	irqSet(IRQ_VCOUNT, hz55Refresh);
+	irqEnable(IRQ_VCOUNT);
 	setupGUI();
 	getInput();
-	if ( initFileHelper() ) {
+	machineInit();
+	if (initFileHelper()) {
 		loadSettings();
+		updateLCDRefresh();
 		autoLoadGame();
 	}
 	else {

@@ -1,4 +1,4 @@
-# SonSonDS V0.1.3
+# SonSonDS V0.2.0
 
 This is a Son Son - Arcade emulator for the NDS.
 
@@ -6,7 +6,7 @@ This is a Son Son - Arcade emulator for the NDS.
 
 1. Create a "acDS" directory either in the root of your card or in the data
 directory (eg h:\data\acds). This is where settings and save files end up.
-2. Now put sonson.zip, sonsonj.zip* into a folder where you have (arcade) roms.
+2. Now put sonson.zip, sonsonj.zip into a folder where you have (arcade) roms.
 3. Depending on your flashcart you might have to DLDI patch the emulator.
 
 When the emulator starts, you can either press L+R or tap on the screen to open
@@ -39,10 +39,10 @@ To select between the tabs use R & L or the touchscreen.
   * Gamma: Lets you change the gamma ("brightness").
 * Settings:
   * Speed: Switch between speed modes.
-   Normal: Game runs at it's normal speed.
-   200%: Game runs at double speed.
-   Max: Game runs at 4 times normal speed (might change this in the future).
-   50%: Game runs at half speed.
+    * Normal: Game runs at it's normal speed.
+    * 200%: Game runs at double speed.
+    * Max: Game runs at 4 times normal speed (might change this in the future).
+    * 50%: Game runs at half speed.
  * Autoload State: Toggle Savestate autoloading.
   Automagically load the savestate associated with the selected game.
   * Autosave Settings: This will save settings when
@@ -71,10 +71,13 @@ Huge thanks to Loopy for the incredible PocketNES, without it this emu would
 probably never have been made.
 Thanks to:
 Dwedit for help and inspiration with a lot of things.
-The MAME team for information about the hardware.
+Nicola Salmoria, for the MAME driver.
 ```
 
 Fredrik Ahlström
-X/Twitter @TheRealFluBBa
-https://www.github.com/FluBBaOfWard
 
+<https://bsky.app/profile/therealflubba.bsky.social>
+
+<https://www.github.com/FluBBaOfWard>
+
+X/Twitter @TheRealFluBBa
