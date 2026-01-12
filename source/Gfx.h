@@ -19,8 +19,8 @@ void gfxInit(void);
 void vblIrqHandler(void);
 void paletteInit(u8 gammaVal);
 void paletteTxAll(void);
-void updateLCDRefresh(void);
 void refreshGfx(void);
+void updateLCDRefresh(void);
 void hz55Refresh(void);
 
 #ifdef __cplusplus

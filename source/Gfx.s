@@ -349,6 +349,7 @@ gScaling:		.byte SCALED
 gGfxMask:		.byte 0
 yStart:			.byte 0
 doLowRefresh:	.byte 0
+lcdSkip:		.long 0
 ;@----------------------------------------------------------------------------
 
 tmpOamBuffer:		.long OAM_BUFFER1
@@ -356,26 +357,19 @@ dmaOamBuffer:		.long OAM_BUFFER2
 
 oamBufferReady:		.long 0
 ;@----------------------------------------------------------------------------
-
-gfxState:
-adjustBlend:
-	.long 1
-windowTop:
-	.long 0,0,0,0				;@ L/R scrolling in unscaled mode
-
-lcdSkip:
-	.long 0
-
-	.byte 0
-	.byte 0
-	.byte 0,0
-
 #ifdef GBA
 	.section .sbss				;@ This is EWRAM on GBA with devkitARM
 #else
 	.section .bss
 #endif
 	.align 2
+
+gfxState:
+adjustBlend:
+	.long 0
+windowTop:
+	.long 0,0,0,0				;@ L/R scrolling in unscaled mode
+
 scrollTemp:
 	.space 0x400*2
 OAM_BUFFER1:

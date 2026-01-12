@@ -15,7 +15,7 @@
 #include "AY38910/Version.h"
 #include "SonSonVideo/Version.h"
 
-#define EMUVERSION "V0.2.0 2026-01-07"
+#define EMUVERSION "V0.2.0 2026-01-12"
 
 #define ALLOW_REFRESH_CHG	(1<<19)
 
