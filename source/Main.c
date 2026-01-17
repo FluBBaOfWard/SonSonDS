@@ -64,9 +64,11 @@ int main(int argc, char **argv) {
 	irqEnable(IRQ_VCOUNT);
 	setupGUI();
 	getInput();
+	initSettings();
+	bool fsOk = initFileHelper();
+	loadSettings();
 	machineInit();
-	if (initFileHelper()) {
-		loadSettings();
+	if (fsOk) {
 		updateLCDRefresh();
 		autoLoadGame();
 	}

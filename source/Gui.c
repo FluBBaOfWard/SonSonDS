@@ -15,7 +15,7 @@
 #include "AY38910/Version.h"
 #include "SonSonVideo/Version.h"
 
-#define EMUVERSION "V0.2.0 2026-01-12"
+#define EMUVERSION "V0.2.0 2026-01-17"
 
 #define ALLOW_REFRESH_CHG	(1<<19)
 
@@ -157,7 +157,6 @@ char *const bonusTxt[] = {"20K", "30K", "20K 80K 100K+", "30K 90K 120K+"};
 
 
 void setupGUI() {
-	emuSettings = AUTOPAUSE_EMULATION;
 	keysSetRepeat(25, 4);	// Delay, repeat.
 	menu1.itemCount = ARRSIZE(fileItems) - (enableExit?0:1);
 	openMenu();

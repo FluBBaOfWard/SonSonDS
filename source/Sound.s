@@ -155,7 +155,12 @@ muteSoundGame:
 timer240Hz:
 	.long 0
 
+#ifdef GBA
+	.section .sbss				;@ This is EWRAM on GBA with devkitARM
+#else
 	.section .bss
+#endif
+	.align 2
 ay38910_0:
 	.space aySize
 ay38910_1:
